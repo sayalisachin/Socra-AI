@@ -1,0 +1,1 @@
+web: gunicorn my_genai_webapp.wsgi --log-file -
