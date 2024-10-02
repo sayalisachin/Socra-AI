@@ -9,6 +9,8 @@ This process can vary widely based on the specific topic, the learner's knowledg
 GenAI excels at generating contextually relevant, adaptive questions in real-time, adjusting its responses based on the input provided by the user. 
 Learners may upload a wide range of content—such as code snippets, quizzes, or questions as needed.
 
+# To Run This Project
+cmd: python manage.py runserver
 
 # Video Demo
 https://github.com/user-attachments/assets/fd21a22c-af5a-456a-8eec-984b57b0baab
