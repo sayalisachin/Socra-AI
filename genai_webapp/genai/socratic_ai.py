@@ -1,7 +1,7 @@
 # genai_webapp/genai/socratic_ai.py
 
 from openai import OpenAI
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="")
 
 def socratic_guidance(content):
     """
