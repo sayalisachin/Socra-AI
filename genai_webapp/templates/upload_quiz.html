@@ -1,0 +1,37 @@
+<!-- genai_webapp/templates/upload_quiz.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Quiz for Socratic Guidance</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <header>
+                <h1>Upload Quiz for Socratic Guidance</h1>
+                <p>Submit your quiz or questions related to Stacks and Queues, and let the AI guide you to the solution.</p>
+            </header>
+
+            <main>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="primary-btn" type="submit">Submit Quiz</button>
+                </form>
+            </main>
+        </div>
+
+        <!-- Back to Home button -->
+        <footer>
+            <a href="{% url 'home' %}">
+                <button class="secondary-btn">Back to Home</button>
+            </a>
+        </footer>
+    </div>
+</body>
+</html>

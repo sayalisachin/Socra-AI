@@ -1,0 +1,49 @@
+<!-- genai_webapp/templates/home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAI Socratic Learning - Home</title>
+    {% load static %}  <!-- Load the static template tag -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Optional CSS -->
+</head>
+<body>
+    <header>
+        <h1>Welcome to GenAI Socratic Learning</h1>
+        <p>Experience interactive learning through the Socratic method for Stacks and Queues.</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>How It Works</h2>
+            <p>Upload your code or quiz questions related to stacks and queues, and our AI will guide you to the solution using the Socratic method. Instead of giving direct answers, the AI will ask you guiding questions to help deepen your understanding.</p>
+        </section>
+
+        <section>
+            <h2>Get Started</h2>
+            <div>
+                <a href="{% url 'upload_code' %}">
+                    <button>Upload Code for Socratic Guidance</button>
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'upload_quiz' %}">
+                    <button>Upload Quiz for Socratic Guidance</button>
+                </a>
+            </div>
+            <div>
+                <!-- New button for Chat Interface -->
+                <a href="{% url 'chat_view' %}">
+                    <button>Start Interactive Chat</button>
+                </a>
+            </div>            
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 GenAI Socratic Learning | Powered by Django & GPT</p>
+    </footer>
+</body>
+</html>

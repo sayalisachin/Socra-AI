@@ -1,0 +1,103 @@
+<!-- genai_webapp/templates/result.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socratic Guidance Result</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <header>
+                <h1>Your Socratic Guidance</h1>
+                <p>Below is the Socratic feedback provided by the AI based on your input.</p>
+            </header>
+
+            <main>
+                <section class="ai-feedback">
+                    <h2>Initial AI Feedback</h2>
+                    <div class="feedback-box">
+                        <p>{{ guidance }}</p>
+                    </div>
+                </section>
+
+                <section id="chat-interface">
+                    <h2>Interactive Socratic Chat</h2>
+                    <div id="chat-box" class="chat-box">
+                        <!-- Chat messages will be dynamically appended here -->
+                    </div>
+
+                    <div id="chat-form">
+                        <form id="message-form" method="POST">
+                            {% csrf_token %}
+                            <textarea id="user_message" name="user_message" placeholder="Continue the conversation..."></textarea>
+                            <button class="primary-btn" type="submit">Send</button>
+                        </form>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Back to Home button -->
+        <footer>
+            <a href="{% url 'home' %}">
+                <button class="secondary-btn">Back to Home</button>
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        // Handle form submission with AJAX to update the chat dynamically
+        document.getElementById('message-form').onsubmit = function(event) {
+            event.preventDefault();
+
+            // Get the user's message from the textarea
+            const userMessage = document.getElementById('user_message').value;
+
+            // Send the message to the server using AJAX
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '{% url "result_chat" %}', true);
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Define the callback for when the server responds
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Get the AI's response from the server
+                    const aiResponse = JSON.parse(xhr.responseText).ai_response;
+
+                    // Update the chat box with the user's message and the AI's response
+                    const chatBox = document.getElementById('chat-box');
+
+                    // Append the user's message
+                    chatBox.innerHTML += `
+                        <div class="chat-message user-message">
+                            <img src="{% static 'images/user_icon.png' %}" alt="User Icon" class="chat-icon">
+                            <p><strong>You:</strong> ${userMessage}</p>
+                        </div>`;
+
+                    // Append the AI's response
+                    chatBox.innerHTML += `
+                        <div class="chat-message ai-message">
+                            <img src="{% static 'images/ai_icon.png' %}" alt="AI Icon" class="chat-icon">
+                            <p><strong>AI:</strong> ${aiResponse}</p>
+                        </div>`;
+
+                    // Scroll to the bottom of the chat
+                    chatBox.scrollTop = chatBox.scrollHeight;
+
+                    // Clear the input field
+                    document.getElementById('user_message').value = '';
+                }
+            };
+
+            // Send the data
+            xhr.send(`user_message=${encodeURIComponent(userMessage)}`);
+        };
+    </script>
+</body>
+</html>
